@@ -1,24 +1,25 @@
 mode: 'train'
 ARCHITECTURE:
-    name: 'MobileNetV3_large_x1_0'
-
+    name: "MobileNetV3_large_x1_0"
+    
 checkpoints: ""
 pretrained_model: "./pretrained/MobileNetV3_large_x1_0_pretrained"
 model_save_dir: "./output/"
 classes_num: 2
 total_images: 75158
 save_interval: 1
+ls_epsilon: 0.1
 validate: True
 valid_interval: 1
 epochs: 100
 topk: 1
-image_shape: [3, 32, 32]
-use_mix: False
+image_shape: [3, 224, 224]
 
 LEARNING_RATE:
-    function: 'Cosine'          
-    params:                   
-        lr: 0.04
+    function: 'CosineWarmup'
+    params:
+        lr: 1.3
+        warmup_epoch: 5
 
 OPTIMIZER:
     function: 'Momentum'
@@ -26,22 +27,23 @@ OPTIMIZER:
         momentum: 0.9
     regularizer:
         function: 'L2'
-        factor: 0.0001
+        factor: 0.00002
 
 TRAIN:
-    batch_size: 1024
+    batch_size: 128
     num_workers: 4
-    file_list: "/data/pfc/judgeEmpty/train_list.txt"
-    data_dir: "/data/pfc/judgeEmpty/"
+    file_list: "/root/data/pfc/data/train_list.txt"
+    data_dir: "/root/data/pfc/data/"
     shuffle_seed: 0
     transforms:
         - DecodeImage:
             to_rgb: True
             channel_first: False
         - RandCropImage:
-            size: 32
+            size: 224
         - RandFlipImage:
             flip_code: 1
+        - AutoAugment:
         - NormalizeImage:
             scale: 1./255.
             mean: [0.485, 0.456, 0.406]
@@ -49,28 +51,27 @@ TRAIN:
             order: ''
         - ToCHWImage:
 
-    mix:
-        - MixupOperator:
-            alpha: 0.2
 
 
 VALID:
-    batch_size: 256
+    batch_size: 20
     num_workers: 0
-    file_list: "/data/pfc/judgeEmpty/test_list.txt"
-    data_dir: "/data/pfc/judgeEmpty/"
+    file_list: "/root/data/pfc/data/test_list.txt"
+    data_dir: "/root/data/pfc/data/"
     shuffle_seed: 0
     transforms:
         - DecodeImage:
             to_rgb: True
             channel_first: False
         - ResizeImage:
-            resize_short: 36
+            resize_short: 256
         - CropImage:
-            size: 32
+            size: 224
         - NormalizeImage:
             scale: 1.0/255.0
             mean: [0.485, 0.456, 0.406]
             std: [0.229, 0.224, 0.225]
             order: ''
         - ToCHWImage:
+
+
