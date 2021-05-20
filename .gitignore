@@ -1,3 +1,5 @@
+.idea/
+output_CIFAR/
 __pycache__/
 *.pyc
 *.sw*

@@ -38,7 +38,7 @@ def parse_args():
         '-c',
         '--config',
         type=str,
-        default='configs/ResNet/ResNet50.yaml',
+        default='configs/quick_start/professional/MobileNetV3_large_x1_0_emptyjudge_finetune.yaml',
         help='config file path')
     parser.add_argument(
         '-o',
@@ -55,7 +55,7 @@ def main(args):
 
     config = get_config(args.config, overrides=args.override, show=True)
     # assign the place
-    use_gpu = config.get("use_gpu", True)
+    use_gpu = config.get("use_gpu", False)  # True
     use_xpu = config.get("use_xpu", False)
     assert (
         use_gpu and use_xpu
