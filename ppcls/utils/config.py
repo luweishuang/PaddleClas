@@ -98,7 +98,7 @@ def check_config(config):
     """
     check.check_version()
 
-    use_gpu = config.get('use_gpu', False)  # True
+    use_gpu = config.get('use_gpu', True)  # True
     if use_gpu:
         check.check_gpu()
 

@@ -55,7 +55,7 @@ def main(args):
 
     config = get_config(args.config, overrides=args.override, show=True)
     # assign the place
-    use_gpu = config.get("use_gpu", False)  # True
+    use_gpu = config.get("use_gpu", True)  # True
     use_xpu = config.get("use_xpu", False)
     assert (
         use_gpu and use_xpu
