@@ -1,25 +1,24 @@
 mode: 'train'
 ARCHITECTURE:
-    name: "MobileNetV3_large_x1_0_ssld"
-    
+    name: 'ShuffleNetV2_x0_25'
+
 checkpoints: ""
-pretrained_model: "./pretrained/MobileNetV3_large_x1_0_ssld_pretrained"
+pretrained_model: ""
 model_save_dir: "./output/"
 classes_num: 2
 total_images: 75150
 save_interval: 1
-ls_epsilon: 0.1
 validate: True
+use_gpu: True
 valid_interval: 1
 epochs: 100
 topk: 1
 image_shape: [3, 224, 224]
 
 LEARNING_RATE:
-    function: 'CosineWarmup'
-    params:
-        lr: 1.3
-        warmup_epoch: 5
+    function: 'Cosine'          
+    params:                   
+        lr: 0.0125
 
 OPTIMIZER:
     function: 'Momentum'
@@ -27,11 +26,11 @@ OPTIMIZER:
         momentum: 0.9
     regularizer:
         function: 'L2'
-        factor: 0.00002
+        factor: 0.00001
 
 TRAIN:
-    batch_size: 64
-    num_workers: 4
+    batch_size: 128
+    num_workers: 0
     file_list: "/root/data/pfc/data/train_list.txt"
     data_dir: "/root/data/pfc/data/"
     shuffle_seed: 0
@@ -43,7 +42,6 @@ TRAIN:
             size: 224
         - RandFlipImage:
             flip_code: 1
-        - AutoAugment:
         - NormalizeImage:
             scale: 1./255.
             mean: [0.485, 0.456, 0.406]
@@ -51,12 +49,10 @@ TRAIN:
             order: ''
         - ToCHWImage:
 
-
-
 VALID:
     batch_size: 20
     num_workers: 0
-    file_list: "/root/data/pfc/data/val_list.txt"
+    file_list: "/root/data/pfc/data/test_list.txt"
     data_dir: "/root/data/pfc/data/"
     shuffle_seed: 0
     transforms:
@@ -73,5 +69,3 @@ VALID:
             std: [0.229, 0.224, 0.225]
             order: ''
         - ToCHWImage:
-
-
