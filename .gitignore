@@ -1,3 +1,5 @@
+output_CIFAR/
+output_empty/
 __pycache__/
 *.pyc
 *.sw*
