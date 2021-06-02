@@ -18,7 +18,7 @@ import numpy as np
 #         os.system("mv %s %s" % (cur_img, cur_img_dst))
 
 
-src_dir = "/data/ieemoo/judgeEmpty/data/train"
+src_dir = "/root/data/pfc/data/train"
 src_dict = {"yesemp":"1", "noemp":"0"}
 all_list = []
 for sub, value in src_dict.items():

@@ -31,7 +31,7 @@ OPTIMIZER:
         factor: 0.00001
 
 TRAIN:
-    batch_size: 512 
+    batch_size: 512
     num_workers: 10
     file_list: "/root/data/pfc/data/train_list.txt"
     data_dir: "/root/data/pfc/data/"
