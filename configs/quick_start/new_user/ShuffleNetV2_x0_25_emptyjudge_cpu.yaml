@@ -15,12 +15,10 @@ epochs: 100
 topk: 1
 image_shape: [3, 224, 224]
 
-ls_epsilon: 0.00001
-
 LEARNING_RATE:
     function: 'Cosine'          
     params:                   
-        lr: 0.0125
+        lr: 0.000125
 
 OPTIMIZER:
     function: 'Momentum'
@@ -32,7 +30,7 @@ OPTIMIZER:
 
 TRAIN:
     batch_size: 128 
-    num_workers: 10
+    num_workers: 0
     file_list: "/data/ieemoo/judgeEmpty/data/train_list.txt"
     data_dir: "/data/ieemoo/judgeEmpty/data/"
     shuffle_seed: 0

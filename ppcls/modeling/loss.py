@@ -61,7 +61,6 @@ class Loss(object):
         avg_cost = paddle.mean(cost)
         return avg_cost
 
-
     def _focal_loss(self, input, target, alpha=0.25, gamma=2.0, epsilon=1e-6):
         # https://blog.csdn.net/weixin_40651515/article/details/105804557
         input = paddle.clip(input, epsilon, 1.0 - epsilon)
@@ -78,38 +77,33 @@ class Loss(object):
         avg_cost = paddle.mean(loss)
         return avg_cost
 
-    def _focal_loss22(self, pred, label, alpha=0.25, gamma=2, epsilon=1e-6):
+    def _focal_loss22(self, input, target, alpha=0.25, gamma=2, epsilon=1e-6):
         '''
         https://aistudio.baidu.com/aistudio/projectdetail/340037
             alpha 越大越关注y=1的情况
             gamma 越大越关注不确定的情况
         '''
         if self._label_smoothing:
-            label = self._labelsmoothing(label)
-        pred = paddle.clip(pred, epsilon, 1 - epsilon)
-        label = paddle.clip(label, epsilon, 1 - epsilon)
-        loss = -1 * (alpha * paddle.pow((1 - pred), gamma) * label * paddle.log(pred) + (
-                    1 - alpha) * paddle.pow(pred, gamma) * (1 - label) * paddle.log(1 - pred))
-        loss = paddle.reduce_mean(loss)
-        return loss
-
-    def _focal_loss11(self, input, target, alpha=0.25, gamma=2.0):
-        # https://www.pythonf.cn/read/79181
-        if self._label_smoothing:
             target = self._labelsmoothing(target)
-            input = -F.log_softmax(input, axis=-1)
-            cross_entropy = paddle.sum(target * input, axis=-1)
-        else:
-            cost = F.cross_entropy(input=input, label=target)
-        # one_hot = paddle.fluid.layers.one_hot(label, train_parameters['class_dim'])
-        # cross_entropy = one_hot * fluid.layers.log(pred)
-        # cross_entropy = fluid.layers.reduce_sum(cross_entropy, dim=-1)
-        weight = -1.0 * target * paddle.pow((1.0 - input), gamma)
-        weight = paddle.sum(weight, axis=-1)
-        ax = alpha * target
-        alph = paddle.sum(ax, axis=-1)
-        loss = alph * weight * cross_entropy
+        input = paddle.clip(input, epsilon, 1.0 - epsilon)
+        # target = paddle.clip(target, epsilon, 1.0 - epsilon)
+        loss = -1 * (alpha * paddle.pow((1 - input), gamma) * target * paddle.log(input) +
+                     (1 - alpha) * paddle.pow(input, gamma) * (1 - target) * paddle.log(1 - input))
+        loss = paddle.sum(loss, axis=1)
         avg_cost = paddle.mean(loss)
+        return avg_cost
+
+    def _focal_loss33(self, pred, label, alpha=0.25, gamma=2.0):
+        # https://www.pythonf.cn/read/79181
+        one_hot = paddle.fluid.layers.one_hot(label, self._class_dim)
+        cross_entropy = one_hot * paddle.log(pred)
+        cross_entropy = paddle.fluid.layers.reduce_sum(cross_entropy, dim=-1)
+        weight = -1.0 * one_hot * paddle.fluid.layers.pow((1.0 - pred), gamma)
+        weight = paddle.fluid.layers.reduce_sum(weight, dim=-1)
+        ax = alpha * one_hot
+        alph = paddle.fluid.layers.reduce_sum(ax, dim=-1)
+        cost = alph * weight * cross_entropy
+        avg_cost = paddle.mean(cost)
         return avg_cost
 
     def _kldiv(self, input, target, name=None):
@@ -140,7 +134,6 @@ class MultiLabelLoss(Loss):
 
     def __call__(self, input, target):
         cost = self._binary_crossentropy(input, target)
-
         return cost
 
 
@@ -156,6 +149,7 @@ class CELoss(Loss):
         # cost = self._crossentropy(input, target)
         cost = self._focal_loss(input, target)
         # print("helloooooooooooooooooooooooooooooooooooooo")
+        # exit()
         return cost
 
 
