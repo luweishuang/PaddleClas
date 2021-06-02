@@ -30,7 +30,6 @@ with open(src_txt, "w") as fw:
     for cur_l in all_list:
         fw.write(cur_l + "\n")
 
-
 # src_dir = "/data/ieemoo/judgeEmpty/data/test"
 # dst_dir = src_dir + "_new"
 # os.makedirs(dst_dir, exist_ok=True)

@@ -5,7 +5,7 @@ ARCHITECTURE:
 pretrained_model: "./pretrained/ShuffleNetV2_x1_5_pretrained"
 model_save_dir: "./output/"
 classes_num: 2
-total_images: 75150
+total_images: 76634
 save_interval: 1
 validate: True
 valid_interval: 1
