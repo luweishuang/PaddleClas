@@ -63,6 +63,25 @@ class Loss(object):
         avg_cost = paddle.mean(cost)
         return avg_cost
 
+    def _focal_loss(self, y_pred, y_true, gamma=2.0, alpha=0.25):
+        # https://blog.csdn.net/weixin_40651515/article/details/105804557
+        # Define epsilon so that the backpropagation will not result in NaN
+        # for 0 divisor case
+        # Add the epsilon to prediction value
+        # y_pred = y_pred + epsilon
+        # Clip the prediction value
+        # y_pred = paddle.clip(y_pred, self._epsilon, 1.0 - self._epsilon)
+        y_pred = paddle.clip(x=y_pred, min=self._epsilon, max=1.0 - self._epsilon)
+        # Calculate cross entropy
+        cross_entropy = -y_true * paddle.log(y_pred)
+        # Calculate weight that consists of  modulating factor and weighting factor
+        weight = alpha * y_true * paddle.pow((1 - y_pred), gamma)
+        # Calculate focal loss
+        loss = weight * cross_entropy
+        # Sum the losses in mini_batch
+        loss = paddle.sum(loss, axis=1)
+        return loss
+
     def _kldiv(self, input, target, name=None):
         eps = 1.0e-10
         cost = target * paddle.log(
@@ -104,7 +123,9 @@ class CELoss(Loss):
         super(CELoss, self).__init__(class_dim, epsilon)
 
     def __call__(self, input, target):
-        cost = self._crossentropy(input, target)
+        # cost = self._crossentropy(input, target)
+        cost = self._focal_loss(input, target)
+        print("helloooooooooooooooooooooooooooooooooooooo")
         return cost
 
 
