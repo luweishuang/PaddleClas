@@ -153,16 +153,9 @@ class CELoss(Loss):
         super(CELoss, self).__init__(class_dim, epsilon)
 
     def __call__(self, input, target):
-<<<<<<< HEAD
         # cost = self._crossentropy(input, target)
         cost = self._focal_loss(input, target)
         # print("helloooooooooooooooooooooooooooooooooooooo")
-        exit()
-=======
-        cost = self._crossentropy(input, target)
-        #cost = self._focal_loss(input, target)
-        # print("helloooooooooooooooooooooooooooooooooooooo")
->>>>>>> 8fb3f9519adc24e04e9f8d6f09ae5e5e9abbee70
         return cost
 
 
