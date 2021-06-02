@@ -1,6 +1,9 @@
 output_CIFAR/
 output_empty/
 __pycache__/
+.idea/
+inference/
+
 *.pyc
 *.sw*
 */workerlog*
