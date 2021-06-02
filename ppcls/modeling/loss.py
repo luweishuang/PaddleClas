@@ -125,7 +125,7 @@ class CELoss(Loss):
     def __call__(self, input, target):
         # cost = self._crossentropy(input, target)
         cost = self._focal_loss(input, target)
-        print("helloooooooooooooooooooooooooooooooooooooo")
+        # print("helloooooooooooooooooooooooooooooooooooooo")
         return cost
 
 

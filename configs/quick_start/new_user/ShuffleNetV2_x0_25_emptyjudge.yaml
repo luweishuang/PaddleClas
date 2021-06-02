@@ -6,7 +6,7 @@ checkpoints: ""
 pretrained_model: ""
 model_save_dir: "./output/"
 classes_num: 2
-total_images: 75150
+total_images: 76634
 save_interval: 1
 validate: True
 use_gpu: False
@@ -33,8 +33,8 @@ OPTIMIZER:
 TRAIN:
     batch_size: 512 
     num_workers: 10
-    file_list: "/data/ieemoo/judgeEmpty/data/train_list.txt"
-    data_dir: "/data/ieemoo/judgeEmpty/data/"
+    file_list: "/root/data/pfc/data/train_list.txt"
+    data_dir: "/root/data/pfc/data/"
     shuffle_seed: 0
     transforms:
         - DecodeImage:
@@ -54,8 +54,8 @@ TRAIN:
 VALID:
     batch_size: 100
     num_workers: 0
-    file_list: "/data/ieemoo/judgeEmpty/data/test_list.txt"
-    data_dir: "/data/ieemoo/judgeEmpty/data/"
+    file_list: "/root/data/pfc/data/test_list.txt"
+    data_dir: "/root/data/pfc/data/"
     shuffle_seed: 0
     transforms:
         - DecodeImage:
