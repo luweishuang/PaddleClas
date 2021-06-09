@@ -28,7 +28,7 @@ OPTIMIZER:
 
 TRAIN:
     batch_size: 64
-    num_workers: 4
+    num_workers: 4 
     file_list: "/root/data/pfc/data/train_list.txt"
     data_dir: "/root/data/pfc/data/"
     shuffle_seed: 0
