@@ -1,7 +1,8 @@
 mode: 'train'
 ARCHITECTURE:
     name: 'ResNet50_vd'
-pretrained_model: "./pretrained/ResNet50_vd_pretrained"
+
+pretrained_model: "./pretrained/ResNet50_vd_ssld_pretrained"
 model_save_dir: "./output/"
 use_gpu: True
 classes_num: 2
@@ -16,7 +17,7 @@ image_shape: [3, 224, 224]
 LEARNING_RATE:
     function: 'Cosine'          
     params:                   
-        lr: 0.00375
+        lr: 0.04
 
 OPTIMIZER:
     function: 'Momentum'
@@ -24,7 +25,7 @@ OPTIMIZER:
         momentum: 0.9
     regularizer:
         function: 'L2'
-        factor: 0.000001
+        factor: 0.0001
 
 TRAIN:
     batch_size: 64
@@ -46,6 +47,7 @@ TRAIN:
             std: [0.229, 0.224, 0.225]
             order: ''
         - ToCHWImage:
+
 
 VALID:
     batch_size: 20
