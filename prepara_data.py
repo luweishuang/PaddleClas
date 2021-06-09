@@ -1,6 +1,7 @@
 import os
 import cv2
 import numpy as np
+import random
 
 
 # index = 0
@@ -18,19 +19,25 @@ import numpy as np
 #         os.system("mv %s %s" % (cur_img, cur_img_dst))
 
 
-src_dir = "/root/data/pfc/data/train"
+# src_dir = "/root/data/pfc/data/train"
+src_dir = "/data/ieemoo/judgeEmpty/data/train"
 src_dict = {"yesemp":"1", "noemp":"0"}
-all_list = []
+all_dict = {"yesemp":[], "noemp":[]}
 for sub, value in src_dict.items():
     sub_path = os.path.join(src_dir, sub)
     for cur_f in os.listdir(sub_path):
         cur_l = os.path.basename(src_dir) + "/" + sub + "/" + cur_f + " " + value
-        all_list.append(cur_l)
+        all_dict[sub].append(cur_l)
 
+yesnum = len(all_dict["yesemp"])
+nonum = len(all_dict["noemp"])
 src_txt = src_dir + "_list.txt"
 with open(src_txt, "w") as fw:
-    for cur_l in all_list:
-        fw.write(cur_l + "\n")
+    for feat_path in random.sample(all_dict["yesemp"], yesnum):
+        fw.write(feat_path + "\n")
+
+    for feat_path in random.sample(all_dict["noemp"], yesnum):
+        fw.write(feat_path + "\n")
 
 
 # src_dir = "/data/ieemoo/judgeEmpty/data/test"
