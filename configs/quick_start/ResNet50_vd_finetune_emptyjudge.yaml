@@ -5,7 +5,7 @@ pretrained_model: "./pretrained/ResNet50_vd_pretrained"
 model_save_dir: "./output/"
 use_gpu: True
 classes_num: 2
-total_images: 75150
+total_images: 62760
 save_interval: 1
 validate: True
 valid_interval: 1
