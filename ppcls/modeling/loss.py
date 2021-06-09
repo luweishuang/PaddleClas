@@ -61,7 +61,7 @@ class Loss(object):
         avg_cost = paddle.mean(cost)
         return avg_cost
 
-    def _focal_loss(self, input, target, alpha=0.25, gamma=2.0, epsilon=1e-6):
+    def _focal_loss(self, input, target, alpha=0.5, gamma=2.0, epsilon=1e-6):
         # https://blog.csdn.net/weixin_40651515/article/details/105804557
         input = paddle.clip(input, epsilon, 1.0 - epsilon)
         if self._label_smoothing:
