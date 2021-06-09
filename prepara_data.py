@@ -19,8 +19,8 @@ import random
 #         os.system("mv %s %s" % (cur_img, cur_img_dst))
 
 
-# src_dir = "/root/data/pfc/data/train"
-src_dir = "/data/ieemoo/judgeEmpty/data/train"
+src_dir = "/root/data/pfc/data/test"
+#src_dir = "/data/ieemoo/judgeEmpty/data/train"
 src_dict = {"yesemp":"1", "noemp":"0"}
 all_dict = {"yesemp":[], "noemp":[]}
 for sub, value in src_dict.items():
@@ -36,7 +36,7 @@ with open(src_txt, "w") as fw:
     for feat_path in random.sample(all_dict["yesemp"], yesnum):
         fw.write(feat_path + "\n")
 
-    for feat_path in random.sample(all_dict["noemp"], yesnum):
+    for feat_path in random.sample(all_dict["noemp"], nonum):
         fw.write(feat_path + "\n")
 
 
