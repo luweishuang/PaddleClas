@@ -5,7 +5,8 @@ import random
 
 
 # index = 0
-# src_dir = "/data/ieemoo/judgeEmpty/data/train"
+# # src_dir = "/root/data/pfc/data/test"
+# src_dir = "/data/ieemoo/judgeEmpty/new_data/test"
 # dst_dir = src_dir + "_new"
 # os.makedirs(dst_dir, exist_ok=True)
 # for sub in os.listdir(src_dir):
@@ -17,12 +18,12 @@ import random
 #         cur_img_dst = os.path.join(sub_path_dst, "%05d.jpg" % index)
 #         index += 1
 #         os.system("mv %s %s" % (cur_img, cur_img_dst))
+# exit()
 
-
-src_dir = "/root/data/pfc/data/test"
-#src_dir = "/data/ieemoo/judgeEmpty/data/train"
-src_dict = {"yesemp":"1", "noemp":"0"}
-all_dict = {"yesemp":[], "noemp":[]}
+# src_dir = "/root/data/pfc/data/test"
+src_dir = "/data/ieemoo/judgeEmpty/new_data/test"
+src_dict = {"yesemp":"1", "noemp":"0", "hard": "2"}
+all_dict = {"yesemp":[], "noemp":[], "hard":[]}
 for sub, value in src_dict.items():
     sub_path = os.path.join(src_dir, sub)
     for cur_f in os.listdir(sub_path):
@@ -31,6 +32,8 @@ for sub, value in src_dict.items():
 
 yesnum = len(all_dict["yesemp"])
 nonum = len(all_dict["noemp"])
+hardnum = len(all_dict["hard"])
+thnum = min(yesnum, nonum, hardnum)
 src_txt = src_dir + "_list.txt"
 with open(src_txt, "w") as fw:
     for feat_path in random.sample(all_dict["yesemp"], yesnum):
@@ -39,6 +42,8 @@ with open(src_txt, "w") as fw:
     for feat_path in random.sample(all_dict["noemp"], nonum):
         fw.write(feat_path + "\n")
 
+    for feat_path in random.sample(all_dict["hard"], hardnum):
+        fw.write(feat_path + "\n")
 
 # src_dir = "/data/ieemoo/judgeEmpty/data/test"
 # dst_dir = src_dir + "_new"
