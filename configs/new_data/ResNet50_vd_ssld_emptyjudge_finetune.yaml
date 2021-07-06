@@ -6,7 +6,7 @@ pretrained_model: "./pretrained/ResNet50_vd_ssld_pretrained"
 model_save_dir: "./output/new_data"
 use_gpu: True
 classes_num: 3
-total_images: 3924
+total_images: 10443 
 save_interval: 1
 validate: True
 valid_interval: 1
@@ -28,7 +28,7 @@ OPTIMIZER:
         factor: 0.0001
 
 TRAIN:
-    batch_size: 64
+    batch_size: 128
     num_workers: 0
     file_list: "/data/pfc/judgeEmpty/new_data/train_list.txt"
     data_dir: "/data/pfc/judgeEmpty/new_data/"
