@@ -30,8 +30,8 @@ OPTIMIZER:
 TRAIN:
     batch_size: 64
     num_workers: 0
-    file_list: "/root/data/pfc/new_data/train_list.txt"
-    data_dir: "/root/data/pfc/new_data/"
+    file_list: "/data/pfc/judgeEmpty/new_data/train_list.txt"
+    data_dir: "/data/pfc/judgeEmpty/new_data/"
     shuffle_seed: 0
     transforms:
         - DecodeImage:
@@ -52,8 +52,8 @@ TRAIN:
 VALID:
     batch_size: 20
     num_workers: 0
-    file_list: "/root/data/pfc/new_data/test_list.txt"
-    data_dir: "/root/data/pfc/new_data/"
+    file_list: "/data/pfc/judgeEmpty/new_data/test_list.txt"
+    data_dir: "/data/pfc/judgeEmpty/new_data/"
     shuffle_seed: 0
     transforms:
         - DecodeImage:
