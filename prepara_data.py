@@ -5,7 +5,7 @@ import random
 
 
 # index = 0
-# src_dir = "/data/ieemoo/judgeEmpty/new_data/train"
+# src_dir =  "/data/ieemoo/judgeEmpty/new_data_5cls/train"
 # dst_dir = src_dir + "_new"
 # os.makedirs(dst_dir, exist_ok=True)
 # for sub in os.listdir(src_dir):
@@ -17,35 +17,42 @@ import random
 #         cur_img_dst = os.path.join(sub_path_dst, "a%05d.jpg" % index)
 #         index += 1
 #         os.system("mv %s %s" % (cur_img, cur_img_dst))
-# exit()
 
 
-src_dir = "/data/ieemoo/judgeEmpty/new_data/train"
-src_dict = {"yesemp":"1", "noemp":"0", "hard": "2"}
-all_dict = {"yesemp":[], "noemp":[], "hard":[]}
-for sub, value in src_dict.items():
-    sub_path = os.path.join(src_dir, sub)
-    for cur_f in os.listdir(sub_path):
-        cur_l = os.path.basename(src_dir) + "/" + sub + "/" + cur_f + " " + value
-        all_dict[sub].append(cur_l)
+# src_dir = "/data/ieemoo/judgeEmpty/new_data_5cls/train"
+# src_dict = {"yesemp":"1", "noemp":"0", "hard": "2", "fly": "3", "stack": "4"}
+# all_dict = {"yesemp":[], "noemp":[], "hard": [], "fly": [], "stack": []}
+# for sub, value in src_dict.items():
+#     sub_path = os.path.join(src_dir, sub)
+#     for cur_f in os.listdir(sub_path):
+#         cur_l = os.path.basename(src_dir) + "/" + sub + "/" + cur_f + " " + value
+#         all_dict[sub].append(cur_l)
+#
+# yesnum = len(all_dict["yesemp"])
+# nonum = len(all_dict["noemp"])
+# hardnum = len(all_dict["hard"])
+# flynum = len(all_dict["fly"])
+# stacknum = len(all_dict["stack"])
+# thnum = min(yesnum, nonum, hardnum, flynum, stacknum)
+# src_txt = src_dir + "_list.txt"
+# with open(src_txt, "w") as fw:
+#     for feat_path in random.sample(all_dict["yesemp"], thnum):
+#         fw.write(feat_path + "\n")
+#
+#     for feat_path in random.sample(all_dict["noemp"], thnum):
+#         fw.write(feat_path + "\n")
+#
+#     for feat_path in random.sample(all_dict["hard"], thnum):
+#         fw.write(feat_path + "\n")
+#
+#     for feat_path in random.sample(all_dict["fly"], thnum):
+#         fw.write(feat_path + "\n")
+#
+#     for feat_path in random.sample(all_dict["stack"], thnum):
+#         fw.write(feat_path + "\n")
 
-yesnum = len(all_dict["yesemp"])
-nonum = len(all_dict["noemp"])
-hardnum = len(all_dict["hard"])
-thnum = min(yesnum, nonum, hardnum)
-src_txt = src_dir + "_list.txt"
-with open(src_txt, "w") as fw:
-    for feat_path in random.sample(all_dict["yesemp"], thnum):
-        fw.write(feat_path + "\n")
 
-    for feat_path in random.sample(all_dict["noemp"], thnum):
-        fw.write(feat_path + "\n")
-
-    for feat_path in random.sample(all_dict["hard"], thnum):
-        fw.write(feat_path + "\n")
-
-
-# src_dir = "/data/ieemoo/judgeEmpty/new_data/train"
+# src_dir = "/data/ieemoo/judgeEmpty/new_data_5cls/train"
 # dst_dir = src_dir + "_new"
 # os.makedirs(dst_dir, exist_ok=True)
 # for sub in os.listdir(src_dir):
@@ -57,11 +64,14 @@ with open(src_txt, "w") as fw:
 #         cur_img_dst = os.path.join(sub_path_dst, cur_f)
 #         pic = cv2.imread(cur_img)
 #         height, width, channels = pic.shape
-#         if height > 257:
-#             img_dst = cv2.resize(pic, (0, 0), fx=0.25, fy=0.25, interpolation=cv2.INTER_NEAREST)
-#             cv2.imwrite(cur_img_dst, img_dst)
-#         else:
+#         min_l = min(height, width)
+#         if min_l <= 256:
+#             # print(cur_img, height, width)
 #             os.system("mv %s %s" % (cur_img, cur_img_dst))
+#         else:
+#             ratio_l = 256.0 / min_l
+#             img_dst = cv2.resize(pic, (0, 0), fx=ratio_l, fy=ratio_l)
+#             cv2.imwrite(cur_img_dst, img_dst)
 
 
 # image = cv2.imread("/data/ieemoo/judgeEmpty/data/tt/Webcam/0a05d.jpg")
@@ -118,3 +128,14 @@ with open(src_txt, "w") as fw:
 #         image5 = cv2.flip(imageT, 1)
 #         cv2.imwrite(os.path.join(sub_path_dst, cur_f.replace(".jpg", "_5.jpg")), image5)
 
+
+src_txt = "/data/ieemoo/judgeEmpty/new_data_5cls/train_list_equal.txt"
+dst_txt = src_txt.replace(".txt", "_new.txt")
+with open(dst_txt, "w") as fw:
+    with open(src_txt, "r") as fr:
+        for c_l in fr:
+            if "hard" in c_l or "fly" in c_l or "stack" in c_l:
+                new_l = c_l.split(" ")[0].replace("hard", "noemp").replace("fly", "noemp").replace("stack", "noemp") + " " + "0"
+                fw.write(new_l + "\n")
+            else:
+                fw.write(c_l)
