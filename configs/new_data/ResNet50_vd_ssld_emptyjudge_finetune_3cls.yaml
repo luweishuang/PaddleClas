@@ -2,11 +2,11 @@ mode: 'train'
 ARCHITECTURE:
     name: 'ResNet50_vd'
 
-pretrained_model: "./pretrained/ResNet50_vd_ssld_pretrained"
-model_save_dir: "./output/new_data"
+pretrained_model: "./pretrained/ResNet50_vd_ssld_v2_pretrained"
+model_save_dir: "./output/new_data_3cls"
 use_gpu: True
 classes_num: 3
-total_images: 10443 
+total_images: 14369 
 save_interval: 1
 validate: True
 valid_interval: 1
@@ -30,8 +30,8 @@ OPTIMIZER:
 TRAIN:
     batch_size: 128
     num_workers: 0
-    file_list: "/data/pfc/judgeEmpty/new_data/train_list.txt"
-    data_dir: "/data/pfc/judgeEmpty/new_data/"
+    file_list: "/data/pfc/judgeEmpty/new_data_3cls/train_list.txt"
+    data_dir: "/data/pfc/judgeEmpty/new_data_3cls/"
     shuffle_seed: 0
     transforms:
         - DecodeImage:
@@ -52,8 +52,8 @@ TRAIN:
 VALID:
     batch_size: 20
     num_workers: 0
-    file_list: "/data/pfc/judgeEmpty/new_data/test_list.txt"
-    data_dir: "/data/pfc/judgeEmpty/new_data/"
+    file_list: "/data/pfc/judgeEmpty/new_data_3cls/test_list.txt"
+    data_dir: "/data/pfc/judgeEmpty/new_data_3cls/"
     shuffle_seed: 0
     transforms:
         - DecodeImage:
