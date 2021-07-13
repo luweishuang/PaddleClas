@@ -9,7 +9,7 @@ Global:
   - foreground
 
   # inference engine config
-  use_gpu: True
+  use_gpu: False
   enable_mkldnn: False
   cpu_num_threads: 100
   enable_benchmark: True

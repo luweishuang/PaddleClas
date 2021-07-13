@@ -1,3 +1,8 @@
+.idea/
+deploy/models/
+deploy/recognition_demo_data_v1.0/
+deploy/zips/
+
 __pycache__/
 *.pyc
 *.sw*

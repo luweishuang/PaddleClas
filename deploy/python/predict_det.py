@@ -33,6 +33,7 @@ from functools import reduce
 import cv2
 import numpy as np
 import paddle
+from utils.draw_bbox import draw_det_results
 
 
 class DetPredictor(Predictor):
@@ -147,8 +148,8 @@ def main(config):
     for idx, image_file in enumerate(image_list):
         img = cv2.imread(image_file)[:, :, ::-1]
         output = det_predictor.predict(img)
+        draw_det_results(img, output, image_file)
         print(output)
-
     return
 
 
